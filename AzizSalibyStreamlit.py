@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from streamlit_option_menu import option_menu
 
 
-Menu = option_menu(None, ["Dataset","Dashboard","Quiz"],icons=["cloud","bar-chart-line","clipboard-check"],menu_icon="cast", default_index=0, orientation="horizontal", styles={"container": {"padding": "0!important", "background-color": "#fafafa"},"icon": {"color": "black", "font-size": "25px"}, "nav-link": {"font-size": "15px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},"nav-link-selected": {"background-color": "purple"},})
+Menu = option_menu(None, ["Dataset","Quiz","Dashboard"],icons=["cloud","clipboard-check","bar-chart-line"],menu_icon="cast", default_index=0, orientation="horizontal", styles={"container": {"padding": "0!important", "background-color": "#fafafa"},"icon": {"color": "black", "font-size": "25px"}, "nav-link": {"font-size": "15px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},"nav-link-selected": {"background-color": "purple"},})
 if Menu == "Dataset": st.title('Suicide Dataset')
 if Menu == "Dashboard": st.title('Suicide Dashboard')
 
@@ -20,7 +20,7 @@ if Menu=="Dataset":st.caption("Suicide is the attempt when someone try to harm h
 # Loading the Data
 if Menu=="Dataset":st.header("Take a first look at the data")
 data = pd.read_csv("master.csv")
-if Menu=="Dataset": st.write(data)
+if Menu=="Dataset":st.write(data)
 
 if Menu=="Dataset":col1, col2, col3 = st.columns(3)
 if Menu=="Dataset":col1.metric("Columns", "12",delta_color="inverse")
@@ -42,16 +42,13 @@ data_men = data[data.sex == "male"]
 data_women = data[data.sex == "female"]
 
 #Now our data is clean and splitted and ready for the EDA part
-col1, col2 = st.columns(2)
+
 # Pie Chart 
 # The most important question Who commit suicides more males or females
 
 if Menu=="Dashboard":st.header(" Who commit suicide more? females or males?")
-
-# To answer this question i plotted a pie chart to see the number that committed suicides
-fig= go.Figure(data=[go.Pie(labels=['Males', 'Females'], values=[data_men["suicides_no"].sum(),data_women["suicides_no"].sum()])])
+if Menu=="Dashboard":fig= go.Figure(data=[go.Pie(labels=['Males', 'Females'], values=[data_men["suicides_no"].sum(),data_women["suicides_no"].sum()])])
 if Menu=="Dashboard":st.plotly_chart(fig)
-
 if Menu=="Dashboard":st.write("As clear in the pie charts 5,188,910 (76.9%) male and 1,559,510 (23.1%) female has committed suicide from 1985 till 2016, which implies that males are 3.3 times more likely to commit suicide than females.")
 
 
@@ -59,7 +56,8 @@ if Menu=="Dashboard":st.write("As clear in the pie charts 5,188,910 (76.9%) male
 
 if Menu=="Dashboard":st.header("Suicide percentage in a specific country")
 
-if Menu=="Dashboard":option = st.selectbox(
+if Menu=="Dashboard":
+    option = st.selectbox(
      'Select Please your Specific country',
      ('Albania', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Aruba', 'Australia',
  'Austria' ,'Azerbaijan' ,'Bahamas', 'Bahrain' ,'Barbados', 'Belarus', 'Belgium',
@@ -79,14 +77,10 @@ if Menu=="Dashboard":option = st.selectbox(
  'Thailand' ,'Trinidad and Tobago' ,'Turkey', 'Turkmenistan', 'Ukraine',
  'United Arab Emirates' ,'United Kingdom', 'United States', 'Uruguay',
  'Uzbekistan'))
-
 if Menu=="Dashboard":st.write('You selected:', option)
-
 if Menu=="Dashboard":datacountry1 = data[data["country"]==option]
-
 if Menu=="Dashboard":data_men1 = datacountry1[data.sex == "male"]
 if Menu=="Dashboard":data_women1 = datacountry1[data.sex == "female"]
-
 if Menu=="Dashboard":plt.pie([data_men1["suicides_no"].sum(),data_women1["suicides_no"].sum() ], labels= ['Percantage of men that commited suicides', 'Percentage of women that commited suiced'], autopct='%1.1f%%')
 if Menu=="Dashboard":fig= go.Figure(data=[go.Pie(labels=['Males', 'Females'], values=[data_men1["suicides_no"].sum(),data_women1["suicides_no"].sum()])])
 if Menu=="Dashboard":st.plotly_chart(fig)
@@ -179,7 +173,7 @@ if Menu=="Dashboard":fig = px.choropleth(geo, locations="country", locationmode=
 
 if Menu=="Dashboard":st.plotly_chart(fig)
 
-if Menu=="Dashboard":st.write("Asia and Europe have highest rate in suicide than other continents. For instance Russia, Ukraine, Kazakhstan, Bulgaria, France score the highest suicide rate. Whic means most probably that countries with long winter season have the highest number of suicides")
+if Menu=="Dashboard":st.write("Asia and Europe have highest rate in suicide than North America, South America and Australia. For instance Russia, Ukraine, Kazakhstan, Bulgaria, France score the highest suicide rate. Whic means most probably that countries with long winter season have the highest number of suicides")
 
 #Top 10 countries which recored the highest suicides rates across the years
 if Menu=="Dashboard":st.header("Top 10 Countries with the highest Suicide Rate")
@@ -204,8 +198,9 @@ if Menu=="Dashboard": st.write("In the last Figure, you can pick the year that y
 
 #Recommendation Page in the Dashboard.
 
-if Menu=="Quiz":st.title("After understanding and interacting with the graphs, here's a small quiz to test your knowledge.")
+if Menu=="Quiz":st.title("Here's a small quiz to test your Suicide knowledge before taking a deep dive in the suicide concepts anf facts.")
 if Menu=="Quiz":st.write("1- Who do you think commit suicide more:")
+if Menu=="Quiz":st.write("")
 if Menu=="Quiz":Female= st.checkbox('Females')
 if Menu=="Quiz":Male= st.checkbox('Males')
 if Menu=="Quiz":
@@ -213,10 +208,65 @@ if Menu=="Quiz":
         st.write("False")
 if Menu=="Quiz":
     if Male:
-        st.write("True")
-
+        st.write("Correct, Males are 3.3 times more likely to commit suicides than females")
+if Menu=="Quiz":st.write("")
+if Menu=="Quiz":st.write("")
           
-if Menu=="Quiz": st.caption("Thank you")
+        
+if Menu=="Quiz":st.write("2- In which year-interval do you think that the world witnessed the highest suicide rate:")
+if Menu=="Quiz":st.write("")
+if Menu=="Quiz":a= st.checkbox('[1985-1990]')
+if Menu=="Quiz":b= st.checkbox('[1990-1995]')
+if Menu=="Quiz":c= st.checkbox('[1995-2000]')
+if Menu=="Quiz":d= st.checkbox('[2000-2015]')
+if Menu=="Quiz":
+    if a|c|d:
+        st.write("False")
+if Menu=="Quiz":
+    if b:
+        st.write("Correct, in 1995 the world record the highest suicide rate reading 249 suicide per 100k popultaion")
+
+if Menu=="Quiz":st.write("") 
+if Menu=="Quiz":st.write("")
+        
+if Menu=="Quiz":st.write("3- Which continent have the highest suicide rate from 1985 till 2015 :")
+if Menu=="Quiz":st.write("")
+if Menu=="Quiz":e= st.checkbox('Europe and Asia')
+if Menu=="Quiz":f= st.checkbox(' North America, South America and Australia')
+if Menu=="Quiz":
+    if e:
+        st.write("Correct, Keep going")
+if Menu=="Quiz":
+    if f:
+        st.write("Oups, False")
+        
+if Menu=="Quiz":st.write("")
+if Menu=="Quiz":st.write("")
+        
+if Menu=="Quiz":st.write("Please use the last graph in the Dashboard page to answer this question")
+if Menu=="Quiz":st.write("4- For year 1990 which country have the highest suicide rate")
+if Menu=="Quiz":st.write("")
+if Menu=="Quiz":q= st.checkbox('France')
+if Menu=="Quiz":w= st.checkbox('Ukraine')
+if Menu=="Quiz":r= st.checkbox('Belgium')
+if Menu=="Quiz":t= st.checkbox('Russian Federation')
+
+if Menu=="Quiz":
+    if q|w|r:
+        st.write("False")
+if Menu=="Quiz":
+    if f:
+        st.write("Correct")
+
+if Menu=="Quiz":st.write("")
+if Menu=="Quiz":st.write("")
+
+if Menu=="Quiz": st.title("I hope you enjoyed it ")
+
+ 
+st.caption("AzizSaliby-SuicideDashboard") 
+
+if Menu=="Dashboard": st.caption("Thank You")
 
 
 
