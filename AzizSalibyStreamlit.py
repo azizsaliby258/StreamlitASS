@@ -88,9 +88,9 @@ if Menu=="Dashboard":st.plotly_chart(fig)
 # Number of suicides across the years
 if Menu=="Dashboard":st.header("Number of Suicide by gender across years ")
 
-if Menu=="Dashboard":Female = st.checkbox('Female')
-if Menu=="Dashboard":Male = st.checkbox('Male')
-if Menu=="Dashboard":Both = st.checkbox('Male-Female')
+if Menu=="Dashboard":Female = st.checkbox('Females')
+if Menu=="Dashboard":Male = st.checkbox('Males')
+if Menu=="Dashboard":Both = st.checkbox('Males-Females')
 if Menu=="Dashboard":figw = px.histogram(data_women,x='year',y='suicides_no',text_auto=True)
 if Menu=="Dashboard":figw.update_traces(opacity=1)
 if Menu=="Dashboard":figw.update_layout(bargap=0.2,
@@ -198,7 +198,7 @@ if Menu=="Dashboard": st.write("In the last Figure, you can pick the year that y
 
 #Recommendation Page in the Dashboard.
 
-if Menu=="Quiz":st.title("Here's a small quiz to test your Suicide knowledge before taking a deep dive in the suicide concepts anf facts.")
+if Menu=="Quiz":st.title("Here's a small quiz to test your Suicide knowledge before taking a deep dive in the suicide concepts and facts.")
 if Menu=="Quiz":st.write("1- Who do you think commit suicide more:")
 if Menu=="Quiz":st.write("")
 if Menu=="Quiz":Female= st.checkbox('Females')
